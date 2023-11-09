@@ -20,12 +20,6 @@ public class LoginController {
 		return mav;
 	}
 
-	@RequestMapping(value = { "/login2" }, method = RequestMethod.GET)
-	public String loginPage2() {
-
-		return "hello";
-	}
-
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
