@@ -7,9 +7,8 @@
 		<!-- <class>com.moneymanagement.entity.ProductEntity</class> -->
 		<class>com.moneymanagement.entity.RoleEntity</class>
 		<class>com.moneymanagement.entity.AccountEntity</class>
-		<!-- <class>com.moneymanagement.entity.CategoryEntity</class> -->
-		<!-- <class>com.moneymanagement.entity.OrderEntity</class> -->
-		<!-- <class>com.moneymanagement.entity.ItemEntity</class> -->
+		<class>com.moneymanagement.entity.CategoryEntity</class>
+		<class>com.moneymanagement.entity.ExpenseEntity</class>
 	</persistence-unit>
 </persistence>
 

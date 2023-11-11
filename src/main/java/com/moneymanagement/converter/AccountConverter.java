@@ -19,7 +19,7 @@ public class AccountConverter {
 		AccountDTO account = new AccountDTO();
 		account.setId(accountEntity.getId());
 		account.setFullName(accountEntity.getFullName());
-		account.setUsername(accountEntity.getUsername());
+		account.setUsername(accountEntity.getUserName());
 		account.setPhoneNumber(accountEntity.getPhoneNumber());
 		account.setAddress(accountEntity.getAddress());
 		account.setEmail(accountEntity.getEmail());
@@ -45,8 +45,7 @@ public class AccountConverter {
 
 		AccountEntity account = new AccountEntity();
 		account.setFullName(dto.getFullName());
-		account.setUsername(dto.getUsername());
-		account.setPassword(dto.getPassword());
+		account.setUserName(dto.getUsername());
 		account.setAddress(dto.getAddress());
 		account.setEmail(dto.getEmail());
 		account.setStatus(SystemConstant.ACTIVE_STATUS);
