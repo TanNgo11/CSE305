@@ -1,4 +1,6 @@
-package com.moneymanagement.dto;
+package com.moneymanagement.exception;
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CategoryDTO extends AbstractDTO<CategoryDTO>{
-
+public class ExceptionDetail {
 	
-	private String name;
-	private ExpenseDTO expenseDTO ;
-	
+	private String timestamp;
+	private String message;
+	private String detail;
 }

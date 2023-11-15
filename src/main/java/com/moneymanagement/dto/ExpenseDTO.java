@@ -13,10 +13,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ExpenseDTO {
+public class ExpenseDTO extends AbstractDTO<ExpenseDTO> {
+
 	private double amount;
 	private Date date;
+
 	private String description;
 	private AccountDTO accountDTO;
-	private List<CategoryDTO> cateEntities = new ArrayList<CategoryDTO>();
+	private List<CategoryDTO> categoriesDTO = new ArrayList<CategoryDTO>();
+
 }

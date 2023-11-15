@@ -1,18 +1,16 @@
 package com.moneymanagement.dto;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class CategoryDTO extends AbstractDTO<CategoryDTO>{
-
-	
-	private String name;
-	private ExpenseDTO expenseDTO ;
-	
+public class ApiResponse {
+	private Boolean success;
+	private String message;
+	private HttpStatus http;
 }

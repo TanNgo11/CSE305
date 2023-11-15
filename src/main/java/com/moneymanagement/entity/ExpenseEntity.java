@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,11 +37,12 @@ public class ExpenseEntity extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
 	@JoinColumn(name="accountID")
+	@JsonIgnore
 	private AccountEntity accountEntity;	
 	
-	@OneToMany(mappedBy = "expensesEntity")
+	@OneToMany(mappedBy = "expensesEntity" ,fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
 	private List<CategoryEntity> entities = new ArrayList<CategoryEntity>();
 	
 	

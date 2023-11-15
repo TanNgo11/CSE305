@@ -2,8 +2,6 @@ package com.moneymanagement.entity;
 
 
 import java.util.ArrayList;
-
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,6 +52,7 @@ public class AccountEntity extends BaseEntity {
 
 	@ManyToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "accountid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
+	@JsonIgnore
 	private List<RoleEntity> roles = new ArrayList<RoleEntity>();
 
 	@OneToMany(mappedBy="accountEntity")

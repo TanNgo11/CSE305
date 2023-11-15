@@ -2,11 +2,18 @@ package com.moneymanagement.service;
 
 import java.util.List;
 
-import com.moneymanagement.entity.CategoryEntity;
+import com.moneymanagement.dto.ApiResponse;
+import com.moneymanagement.dto.CategoryDTO;
 
 public interface ICategoryService {
 
-	CategoryEntity getCategoryByID(long id);
+	CategoryDTO getCategoryByID(long id);
 
-	List<CategoryEntity> getAllCategory();
+	List<CategoryDTO> getAllCategory();
+
+	CategoryDTO saveCategoryDTO(CategoryDTO categoryDTO);
+
+	CategoryDTO editCategoryDTO(CategoryDTO categoryDTO);
+
+	ApiResponse deleteCategoryDTO(long id);
 }
