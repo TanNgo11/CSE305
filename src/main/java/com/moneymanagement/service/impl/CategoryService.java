@@ -38,9 +38,9 @@ public class CategoryService implements ICategoryService {
 
 		List<CategoryDTO> listCategoryDTO = new ArrayList<>();
 
-		for (CategoryEntity accountEntity : listCategoryEntity) {
+		for (CategoryEntity cateEntity : listCategoryEntity) {
 
-			listCategoryDTO.add(mapper.map(accountEntity, CategoryDTO.class));
+			listCategoryDTO.add(mapper.map(cateEntity, CategoryDTO.class));
 		}
 
 		return listCategoryDTO;

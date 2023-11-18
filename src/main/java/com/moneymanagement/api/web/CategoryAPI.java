@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.moneymanagement.dto.ApiResponse;
 import com.moneymanagement.dto.CategoryDTO;
-import com.moneymanagement.repository.CategoryRepository;
 import com.moneymanagement.service.impl.CategoryService;
 
 @RestController(value = "categoryAPI")
@@ -23,12 +22,8 @@ public class CategoryAPI {
 	@Autowired
 	private CategoryService categoryService;
 
-	@Autowired
-	private CategoryRepository categoryRepository;
-
 	@GetMapping("/api/categories")
 	public ResponseEntity<List<CategoryDTO>> getAllCategory() {
-		System.out.println();
 		return new ResponseEntity<List<CategoryDTO>>(categoryService.getAllCategory(), HttpStatus.OK);
 	}
 
@@ -46,8 +41,8 @@ public class CategoryAPI {
 		return new ResponseEntity<CategoryDTO>(categoryService.editCategoryDTO(newCategoryDTO), HttpStatus.OK);
 	}
 	@DeleteMapping("/api/category")
-	public ResponseEntity<ApiResponse> deleteCategory(@RequestBody CategoryDTO newCategoryDTO) {
-		return new ResponseEntity<ApiResponse>(categoryService.deleteCategoryDTO(newCategoryDTO.getId()), HttpStatus.OK);
+	public ResponseEntity<ApiResponse> deleteCategory(@RequestBody CategoryDTO categoryDTO) {
+		return new ResponseEntity<ApiResponse>(categoryService.deleteCategoryDTO(categoryDTO.getId()), HttpStatus.OK);
 	}
 	
 	

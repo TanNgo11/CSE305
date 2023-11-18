@@ -39,11 +39,13 @@ public class ExpenseEntity extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
 	@JoinColumn(name="accountID")
-	@JsonIgnore
 	private AccountEntity accountEntity;	
 	
-	@OneToMany(mappedBy = "expensesEntity" ,fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
-	private List<CategoryEntity> entities = new ArrayList<CategoryEntity>();
+	@ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+	@JoinColumn(name="categoryId")
+	private CategoryEntity categoryEntity;
+	
+	
 	
 	
 	
