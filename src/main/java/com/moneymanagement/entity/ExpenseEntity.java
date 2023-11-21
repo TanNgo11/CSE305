@@ -41,7 +41,7 @@ public class ExpenseEntity extends BaseEntity {
 	@JoinColumn(name="accountID")
 	private AccountEntity accountEntity;	
 	
-	@ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="categoryId")
 	private CategoryEntity categoryEntity;
 	

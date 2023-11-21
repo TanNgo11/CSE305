@@ -8,7 +8,7 @@ import com.moneymanagement.dto.ExpenseDTO;
 public interface IExpenseService {
 	List<ExpenseDTO> getAllExpense();
 
-	ExpenseDTO saveExpenseDTO(ExpenseDTO entity);
+	ExpenseDTO saveExpenseDTO(ExpenseDTO entity, long cateId);
 
 	ExpenseDTO getExpenseByID(long id);
 	

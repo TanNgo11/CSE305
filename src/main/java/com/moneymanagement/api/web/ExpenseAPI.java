@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moneymanagement.dto.ApiResponse;
-import com.moneymanagement.dto.CategoryDTO;
 import com.moneymanagement.dto.ExpenseDTO;
-import com.moneymanagement.entity.ExpenseEntity;
 import com.moneymanagement.service.impl.ExpenseService;
 
 @RestController(value = "expenseAPI")
@@ -30,20 +29,27 @@ public class ExpenseAPI {
 
 		return new ResponseEntity<List<ExpenseDTO>>(expenseService.getAllExpense(), HttpStatus.OK);
 	}
+
 	@GetMapping("/api/expense/{id}")
 	public ResponseEntity<ExpenseDTO> getExpensebyID(@PathVariable("id") long id) {
 		return new ResponseEntity<ExpenseDTO>(expenseService.getExpenseByID(id), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/api/expense")
-	public ResponseEntity<ExpenseDTO> saveExpenseEntity(@RequestBody ExpenseDTO entity) {
-		return new ResponseEntity<ExpenseDTO>(expenseService.saveExpenseDTO(entity), HttpStatus.OK);
+	public ResponseEntity<ExpenseDTO> saveExpenseEntity(@RequestParam(name = "amount") double amount,
+			@RequestParam(name = "description") String description, @RequestParam(name = "cateId") long cateId) {
+		
+		ExpenseDTO expenseDTO = new ExpenseDTO();
+		expenseDTO.setAmount(amount);
+		expenseDTO.setDescription(description);
+		return new ResponseEntity<ExpenseDTO>(expenseService.saveExpenseDTO(expenseDTO, cateId), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/api/expense")
-	public ResponseEntity<ApiResponse> deleteCategory(@RequestBody ExpenseDTO expenseDTO) {
-		return new ResponseEntity<ApiResponse>(expenseService.deleteExpenseByID(expenseDTO.getId()), HttpStatus.OK);
+	@DeleteMapping("/api/expense/{id}")
+	public ResponseEntity<ApiResponse> deleteExpenseByid(@PathVariable long id) {
+		return new ResponseEntity<ApiResponse>(expenseService.deleteExpenseByID(id), HttpStatus.OK);
 	}
+
 	@PutMapping("/api/expense")
 	public ResponseEntity<ExpenseDTO> editResponEntities(@RequestBody ExpenseDTO expenseDTO) {
 		return new ResponseEntity<ExpenseDTO>(expenseService.editExpenseDTO(expenseDTO), HttpStatus.OK);
