@@ -51,25 +51,6 @@ function addExpense(formData) {
 	});
 }
 
-function updateProduct(formData) {
-
-	$.ajax({
-				url : '/admin/api/v1/products',
-				type : 'PUT',
-				data : formData,
-				enctype : 'multipart/form-data',
-				cache : false,
-				contentType : false,
-				processData : false,
-				success : function(result) {
-					window.location.href = "/admin/product/edit?id="
-							+ result.id + "&msg=update_success";
-				},
-				error : function(result) {
-					window.location.href = "/admin/product/edit?msg=update_error";
-				}
-			});
-}
 function loadAllExpense() {
 
     $.ajax({
@@ -136,3 +117,5 @@ function secondsToDate(seconds) {
 
 	  return `${datePart} ${timePart}`;
 	}
+
+
