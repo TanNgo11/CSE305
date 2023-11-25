@@ -2,9 +2,12 @@ package com.moneymanagement.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +33,7 @@ public class ExpenseService implements IExpenseService {
 
 	@Autowired
 	private ExpenseConverter expenseConverter;
-	
+
 	@Autowired
 	private CategoryRepository categoryRepository;
 
@@ -65,13 +68,12 @@ public class ExpenseService implements IExpenseService {
 	}
 
 	@Override
-	public ExpenseDTO saveExpenseDTO(ExpenseDTO expenseDTO ,long cateId) {
+	public ExpenseDTO saveExpenseDTO(ExpenseDTO expenseDTO, long cateId) {
 		CategoryEntity cateEntity = categoryRepository.findOne(cateId);
 		ExpenseEntity expenseEntity = mapper.map(expenseDTO, ExpenseEntity.class);
 		expenseEntity.setCategoryEntity(cateEntity);
 		expenseRepository.save(expenseEntity);
 
-		
 		return mapper.map(expenseEntity, ExpenseDTO.class);
 	}
 
@@ -101,6 +103,22 @@ public class ExpenseService implements IExpenseService {
 		expenseRepository.save(expenseEntity);
 
 		return mapper.map(expenseEntity, ExpenseDTO.class);
+	}
+
+	@Override
+	public List<ExpenseDTO> findAllExpensesByMonthAndYear(int month, int year, Pageable pageable) {
+		List<ExpenseEntity> listExpenseEntity = expenseRepository.findAllExpensesByMonthAndYear(month, year, pageable)
+				.orElseThrow(() -> new ResourceNotFoundException("Can not found any expense"));
+
+		return listExpenseEntity.stream().map(expense -> expenseConverter.toDTO(new ExpenseDTO(), expense))
+				.collect(Collectors.toList());
+
+	}
+
+	@Override
+	public int getTotalExpense() {
+		
+		return (int) expenseRepository.count();
 	}
 
 }

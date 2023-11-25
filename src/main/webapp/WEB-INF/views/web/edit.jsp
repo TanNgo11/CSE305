@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">Category</label> <select
-					id="categories" class="form-control">
+					id="categories" class="form-control" value="${category}">
 
 
 				</select>
@@ -67,6 +67,8 @@
 			}
 		});
 	}
+
+
 	
 	</script>
 

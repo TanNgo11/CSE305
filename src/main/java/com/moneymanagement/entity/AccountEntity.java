@@ -58,6 +58,9 @@ public class AccountEntity extends BaseEntity {
 	@OneToMany(mappedBy="accountEntity")
     private List<ExpenseEntity> expenseEnties = new ArrayList<>();
 	
+	@OneToMany(mappedBy="accountEntity")
+	private List<BudgetEntity> budgetEntities = new ArrayList<>();
+	
 	
 	
 

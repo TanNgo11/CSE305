@@ -1,19 +1,14 @@
 package com.moneymanagement.converter;
 
-
 import org.springframework.stereotype.Component;
 
 import com.moneymanagement.constant.SystemConstant;
 import com.moneymanagement.dto.AccountDTO;
 import com.moneymanagement.entity.AccountEntity;
 
-
 @Component
 public class AccountConverter {
-	
 
-	
-	
 	public AccountDTO toDTO(AccountEntity accountEntity) {
 
 		AccountDTO account = new AccountDTO();
@@ -25,7 +20,7 @@ public class AccountConverter {
 		account.setEmail(accountEntity.getEmail());
 		account.setStatus(accountEntity.getStatus());
 		account.setListRole(accountEntity.getRoles());
-		
+
 		if (accountEntity.getCreatedBy() != null) {
 			account.setCreatedBy(accountEntity.getCreatedBy());
 		}
@@ -51,9 +46,9 @@ public class AccountConverter {
 		account.setStatus(SystemConstant.ACTIVE_STATUS);
 		return account;
 	}
-	
-	public AccountEntity toEntity(AccountEntity result,AccountDTO dto) {
-		
+
+	public AccountEntity toEntity(AccountEntity result, AccountDTO dto) {
+
 		result.setPhoneNumber(dto.getPhoneNumber());
 		result.setAddress(dto.getAddress());
 		result.setEmail(dto.getEmail());

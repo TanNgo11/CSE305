@@ -28,7 +28,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/template/css/toastmsg.css'/>">
 
-
+<script src="<c:url value='/template/js/main.js'/>"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -38,7 +38,7 @@
 
 
 </head>
-<body onload="loadCategories(); loadAllExpense()">
+<body onload="loadAllExpense()">
 
 
 
@@ -77,7 +77,7 @@
 		});
 	</script>
 
-	<script src="<c:url value='/template/js/main.js'/>"></script>
+	
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
 
 

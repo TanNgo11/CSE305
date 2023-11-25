@@ -48,7 +48,7 @@ public class HomeController {
 		ExpenseDTO expenseDTO = expenseService.getExpenseByID(id);
 		mav.addObject("id",expenseDTO.getId());
 		mav.addObject("amount",expenseDTO.getAmount());
-		mav.addObject("category",expenseDTO.getCategoryDTO().getName());
+		mav.addObject("category",expenseDTO.getCategoryDTO().getId());
 		mav.addObject("description",expenseDTO.getDescription());
 		return mav;
 	}

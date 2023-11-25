@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
+	
+	  
 
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public ModelAndView loginPage() {
@@ -33,5 +35,7 @@ public class LoginController {
 	public ModelAndView accessDenied() {
 		return new ModelAndView("redirect:/login?accessDenied");
 	}
+	
+	 
 
 }
