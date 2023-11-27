@@ -15,9 +15,12 @@ import com.moneymanagement.entity.BudgetEntity;
 public class BudgetConverter {
 	@Autowired
 	private ModelMapper mapper;
-	
+
 	@Autowired
 	private ExpenseConverter expenseConverter;
+
+	@Autowired
+	private AccountConverter accountConverter;
 
 	public BudgetDTO toDTO(BudgetEntity entity) {
 
@@ -30,14 +33,19 @@ public class BudgetConverter {
 		dto.setCurrentAmount(entity.getCurrentAmount());
 		dto.setStatus(entity.getStatus());
 		dto.setAccountDTO(mapper.map(entity.getAccountEntity(), AccountDTO.class));
-		dto.setListExpenseDTO(entity
-		        .getExpenseEntities()
-		        .stream()
-		        .map(expense -> expenseConverter.toDTO(new ExpenseDTO(), expense))
-		        .collect(Collectors.toList()));
+		dto.setListExpenseDTO(entity.getExpenseEntities().stream()
+				.map(expense -> expenseConverter.toDTO(new ExpenseDTO(), expense)).collect(Collectors.toList()));
 
 		return dto;
 
+	}
+
+	public BudgetEntity toEntity(BudgetEntity entity, BudgetDTO dto) {
+
+		entity.setTargetAmount(dto.getTargetAmount());
+		entity.setEndDate(dto.getEndDate());
+
+		return entity;
 	}
 
 }

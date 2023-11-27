@@ -16,7 +16,11 @@
 
 		<intercept-url pattern="/user/**"
 			access="isAuthenticated()" />
-
+			<intercept-url pattern="/home/**"
+			access="isAuthenticated()" />
+			<intercept-url pattern="/budget/**"
+			access="isAuthenticated()" />
+			
 
 		<access-denied-handler
 			error-page="/accessDenied" />

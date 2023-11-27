@@ -1,6 +1,5 @@
 package com.moneymanagement.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class ExpenseEntity extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "accountID")
 	private AccountEntity accountEntity;
 
@@ -35,7 +34,7 @@ public class ExpenseEntity extends BaseEntity {
 	@JoinColumn(name = "categoryId")
 	private CategoryEntity categoryEntity;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "budgetId")
 	private BudgetEntity budgetEntity;
 

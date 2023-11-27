@@ -34,7 +34,7 @@ public class BudgetEntity extends BaseEntity {
 	@JoinColumn(name = "accountId")
 	private AccountEntity accountEntity;
 
-	@OneToMany(mappedBy = "budgetEntity")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "budgetEntity")
 	private List<ExpenseEntity> expenseEntities = new ArrayList<ExpenseEntity>();
 
 }

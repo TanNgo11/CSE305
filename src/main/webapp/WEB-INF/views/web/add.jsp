@@ -17,7 +17,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">Category</label> <select
-					onload="loadCategories()" id="categories" class="form-control">
+					id="categories" class="form-control">
 
 
 				</select>
@@ -31,26 +31,11 @@
 			<button id="addExpense" type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
+	<script src="<c:url value='/template/js/ExpenseAndCategoreis.js'/>"></script>
 	<script type="text/javascript">
-	function loadCategories() {
-
-	    $.ajax({
-	        url: "/api/categories",
-	        type: "get",
-	        success: function (data) {
-	        	const categories= document.querySelector("#categories");
-	        	var str =""
-	        		for (let item of data) {
-	        		  str+=`<option value="${item.id}">${item.name}</option>`
-	        	}
-	        	categories.innerHTML=str;
-	        	 
-	        }
-	            
-	    });
-}
-		
+		window.onload = loadCategories();
 	</script>
+
 
 </body>
 </html>

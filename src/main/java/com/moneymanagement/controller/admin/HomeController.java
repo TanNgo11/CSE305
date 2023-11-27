@@ -1,4 +1,4 @@
-package com.moneymanagement.controller.web;
+package com.moneymanagement.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,14 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.moneymanagement.utils.MessageUtil;
 
-@Controller(value = "homeControllerOfWeb")
+@Controller(value = "homeControllerOfAdmin")
 public class HomeController {
 
 	
 
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = {  "/admin/home" }, method = RequestMethod.GET)
 	public ModelAndView homePage(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("web/home");
+		ModelAndView mav = new ModelAndView("admin/home");
 
 		if (request.getParameter("msg") != null) {
 

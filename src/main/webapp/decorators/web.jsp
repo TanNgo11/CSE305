@@ -40,14 +40,20 @@
 </head>
 <body onload="loadAllExpense()">
 
+	<security:authorize access="isAuthenticated()">
+		<h3><%=SecurityUtils.getPrincipal().getFullName()%></h3>
+	</security:authorize>
+
+	<div class="container">
+		<dec:body />
+	</div>
 
 
 
-	<dec:body />
 
 
 
-	
+
 	<div id="toasts">
 		<input id="message" type="hidden" value="${msg}">
 	</div>
@@ -77,8 +83,10 @@
 		});
 	</script>
 
-	
+
 	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
+
+
 
 
 </body>

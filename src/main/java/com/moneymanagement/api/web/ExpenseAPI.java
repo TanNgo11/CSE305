@@ -18,33 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.moneymanagement.dto.ApiResponse;
 import com.moneymanagement.dto.ExpenseDTO;
-import com.moneymanagement.service.impl.ExpenseService;
+import com.moneymanagement.service.IExpenseService;
 
 @RestController(value = "expenseAPI")
 public class ExpenseAPI {
 
 	@Autowired
-	private ExpenseService expenseService;
+	private IExpenseService expenseService;
 
 	@GetMapping("/api/expenses")
 	public ResponseEntity<List<ExpenseDTO>> getAllexpenses() {
 
 		return new ResponseEntity<List<ExpenseDTO>>(expenseService.getAllExpense(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/api/expenses/sortBy")
-	public ResponseEntity<ExpenseDTO> getAllExpensesByMonthAndYear(@RequestParam(name = "month", required = false) int month,
+	public ResponseEntity<ExpenseDTO> getAllExpensesByMonthAndYear(
+			@RequestParam(name = "month", required = false) int month,
 			@RequestParam(name = "year", required = false) int year, @RequestParam("page") int page,
 			@RequestParam("limit") int limit) {
-
-		
 
 		ExpenseDTO result = new ExpenseDTO();
 		result.setPage(page);
 		result.setLimit(limit);
 
 		Pageable pageable = new PageRequest(page - 1, limit);
-		result.setListResult(expenseService.findAllExpensesByMonthAndYear(month, year, pageable));
+		result.setListResult(expenseService.findAllExpensesByMonthAndYear(month, year));
 		result.setTotalItem(expenseService.getTotalExpense());
 		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
 
@@ -59,7 +58,7 @@ public class ExpenseAPI {
 	@PostMapping("/api/expense")
 	public ResponseEntity<ExpenseDTO> saveExpenseEntity(@RequestParam(name = "amount") double amount,
 			@RequestParam(name = "description") String description, @RequestParam(name = "cateId") long cateId) {
-		
+
 		ExpenseDTO expenseDTO = new ExpenseDTO();
 		expenseDTO.setAmount(amount);
 		expenseDTO.setDescription(description);

@@ -50,7 +50,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	
 	private boolean isUser(List<String> roles) {
 		if (roles.contains("USER")) {
-			System.out.println("hehe");
+		
 			return true;
 		}
 		return false;

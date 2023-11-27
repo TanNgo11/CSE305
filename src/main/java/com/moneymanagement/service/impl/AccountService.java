@@ -60,4 +60,12 @@ public class AccountService implements IAccountService {
 		return dto;
 	}
 
+
+
+	@Override
+	public AccountDTO findById(long userId) {
+		
+		return accountConverter.toDTO(userRepository.findOne(userId));
+	}
+
 }

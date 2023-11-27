@@ -9,6 +9,7 @@
 		<class>com.moneymanagement.entity.AccountEntity</class>
 		<class>com.moneymanagement.entity.CategoryEntity</class>
 		<class>com.moneymanagement.entity.ExpenseEntity</class>
+		<class>com.moneymanagement.entity.BudgetEntity</class>
 	</persistence-unit>
 </persistence>
 

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.moneymanagement.dto.ApiResponse;
 import com.moneymanagement.dto.ExpenseDTO;
+import com.moneymanagement.entity.AccountEntity;
 
 public interface IExpenseService {
 	List<ExpenseDTO> getAllExpense();
@@ -19,7 +20,7 @@ public interface IExpenseService {
 	
 	ExpenseDTO editExpenseDTO(ExpenseDTO expenseDTO);
 	
-	List<ExpenseDTO> findAllExpensesByMonthAndYear(int month, int year, Pageable pageable);
+	List<ExpenseDTO> findAllExpensesByMonthAndYear(int month, int year);
 	
 	int getTotalExpense();
 }
