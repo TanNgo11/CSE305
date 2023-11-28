@@ -37,7 +37,7 @@
 				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
 				<!-- add Product -->
 				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new account</span>
+					<span>Add new Category</span>
 				</a>
 			</div>
 

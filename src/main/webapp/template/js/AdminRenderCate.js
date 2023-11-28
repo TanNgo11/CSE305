@@ -1,5 +1,5 @@
 var homeConfig = {
-    pageSize: 2,
+    pageSize: 10,
     currentPage: 1
 }
 
@@ -33,18 +33,14 @@ function loadAllCategories() {
                 }
                 str += `<tr>
                     <th scope="row">${item.id}</th>
-                    <td>${item.username}</td>
-                    <td>${item.fullName}</td>
-                    <td>${item.email}</td>
-                    <td>${item.address}</td>
-                    <td>${item.phoneNumber}</td>
+                    <td>${item.name}</td>
                     <td>${status}</td>
                     <td><button onclick ="activeAccountByID(${item.id})" type="button" class="btn btn-secondary">Active</button>
                           <button onclick ="disableAccountByID(${item.id})" type="button" class="btn btn-secondary">Inactive</button></td>
                 </tr>`
             }
             paging(totalPages, currentPage, function () {
-                loadAllUsers()
+                loadAllCategories()
             });
             content.innerHTML = str;
 
@@ -55,11 +51,11 @@ function loadAllCategories() {
 
 function disableAccountByID(id) {
     $.ajax({
-        url: "/admin/api/account/" + id,
+        url: "/admin/api/category/" + id,
         type: "delete",
         success: function (data) {
             console.log(data);
-            window.onload = loadAllUsers();
+            window.onload = loadAllCategories();
 
 
 
@@ -69,11 +65,11 @@ function disableAccountByID(id) {
 }
 function activeAccountByID(id) {
     $.ajax({
-        url: "/admin/api/account/" + id,
+        url: "/admin/api/category/" + id,
         type: "put",
         success: function (data) {
             console.log(data);
-            window.onload = loadAllUsers();
+            window.onload = loadAllCategories();
 
 
 
@@ -81,7 +77,7 @@ function activeAccountByID(id) {
 
     });
 }
-window.onload = loadAllUsers();
+window.onload = loadAllCategories();
 
 
 function paging(totalPages, currentPage, callback) {
