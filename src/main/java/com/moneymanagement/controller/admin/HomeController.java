@@ -12,9 +12,7 @@ import com.moneymanagement.utils.MessageUtil;
 @Controller(value = "homeControllerOfAdmin")
 public class HomeController {
 
-	
-
-	@RequestMapping(value = {  "/admin/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/home" }, method = RequestMethod.GET)
 	public ModelAndView homePage(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("admin/home");
 
@@ -30,5 +28,20 @@ public class HomeController {
 		return mav;
 	}
 
-	
+	@RequestMapping(value = { "/admin/category" }, method = RequestMethod.GET)
+	public ModelAndView categorypage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("admin/category");
+
+		if (request.getParameter("msg") != null) {
+
+			if (request.getParameter("msg").equals("add_success"))
+				mav.addObject("msg", MessageUtil.SUCCESS_ADD);
+			else {
+				mav.addObject("msg", MessageUtil.ERROR_ADD);
+			}
+		}
+
+		return mav;
+	}
+
 }

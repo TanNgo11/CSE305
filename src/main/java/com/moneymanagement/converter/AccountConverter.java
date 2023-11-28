@@ -20,6 +20,7 @@ public class AccountConverter {
 		account.setEmail(accountEntity.getEmail());
 		account.setStatus(accountEntity.getStatus());
 		account.setListRole(accountEntity.getRoles());
+		account.setStatus(accountEntity.getStatus());
 
 		if (accountEntity.getCreatedBy() != null) {
 			account.setCreatedBy(accountEntity.getCreatedBy());

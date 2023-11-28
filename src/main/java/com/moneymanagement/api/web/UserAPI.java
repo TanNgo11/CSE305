@@ -18,5 +18,4 @@ public class UserAPI {
 		return accountService.save(accountDTO);
 	}
 	
-
 }
