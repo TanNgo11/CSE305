@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.moneymanagement.constant.SystemConstant;
 import com.moneymanagement.converter.AccountConverter;
 import com.moneymanagement.dto.AccountDTO;
+import com.moneymanagement.dto.ApiResponse;
 import com.moneymanagement.entity.AccountEntity;
 import com.moneymanagement.entity.RoleEntity;
+import com.moneymanagement.exception.UserNotFoundException;
 import com.moneymanagement.repository.RoleRepository;
 import com.moneymanagement.repository.UserRepository;
 import com.moneymanagement.service.IAccountService;
@@ -20,7 +23,6 @@ import com.moneymanagement.service.IAccountService;
 @Service
 public class AccountService implements IAccountService {
 
-	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -33,8 +35,6 @@ public class AccountService implements IAccountService {
 	@Autowired
 	private PasswordEncoder BCryptPasswordEncoder;
 
-	
-	
 	@Override
 	@Transactional
 	public AccountDTO save(AccountDTO dto) {
@@ -50,8 +50,6 @@ public class AccountService implements IAccountService {
 		}
 		return null;
 	}
-	
-	
 
 	@Override
 	public AccountDTO findByUsername(String userName) {
@@ -60,12 +58,58 @@ public class AccountService implements IAccountService {
 		return dto;
 	}
 
-
-
 	@Override
 	public AccountDTO findById(long userId) {
-		
+
 		return accountConverter.toDTO(userRepository.findOne(userId));
 	}
 
+	@Override
+	public ApiResponse disableStatusAccount(long id) {
+		AccountEntity account = userRepository.findOne(id);
+		if (account == null) {
+			throw new UserNotFoundException("Not found user!");
+		}
+		account.setStatus(SystemConstant.INACTIVE_STATUS);
+		userRepository.save(account);
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.setHttp(HttpStatus.OK);
+		apiResponse.setMessage("Disable Account Successfull");
+		apiResponse.setSuccess(true);
+		return apiResponse;
+	}
+
+	@Override
+	public ApiResponse activeStatusAccount(long id) {
+		AccountEntity account = userRepository.findOne(id);
+		if (account == null) {
+			throw new UserNotFoundException("Not found user!");
+		}
+		account.setStatus(SystemConstant.ACTIVE_STATUS);
+		userRepository.save(account);
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.setHttp(HttpStatus.OK);
+		apiResponse.setMessage("Active Account Successfull");
+		apiResponse.setSuccess(true);
+		return apiResponse;
+	}
+
+	@Override
+	public List<AccountDTO> getAllAccounts(org.springframework.data.domain.Pageable pageable) {
+		List<AccountEntity> listAccountEntity = userRepository.findAll(pageable).getContent();
+
+		List<AccountDTO> listAccountDTO = new ArrayList<>();
+
+		for (AccountEntity accountEntity : listAccountEntity) {
+			listAccountDTO.add(accountConverter.toDTO(accountEntity));
+		}
+
+		return listAccountDTO;
+	}
+
+	@Override
+	public int getTotalItem() {
+		return (int) userRepository.count();
+		
+	}
 }
