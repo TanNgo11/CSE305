@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.moneymanagement.constant.SystemConstant;
 import com.moneymanagement.dto.ApiResponse;
 import com.moneymanagement.dto.CategoryDTO;
 import com.moneymanagement.entity.CategoryEntity;
@@ -33,8 +35,8 @@ public class CategoryService implements ICategoryService {
 	}
 
 	@Override
-	public List<CategoryDTO> getAllCategory() {
-		List<CategoryEntity> listCategoryEntity = categoryRepository.findAll();
+	public List<CategoryDTO> getAllCategory(Pageable pageable) {
+		List<CategoryEntity> listCategoryEntity = categoryRepository.findAll(pageable).getContent();
 
 		List<CategoryDTO> listCategoryDTO = new ArrayList<>();
 
@@ -69,18 +71,50 @@ public class CategoryService implements ICategoryService {
 	}
 
 	@Override
-	public ApiResponse deleteCategoryDTO(long id) {
-		if (categoryRepository.findOne(id) == null) {
+	public int getTotalItem() {
+		return (int) categoryRepository.count();
+
+	}
+
+	@Override
+	public List<CategoryDTO> getAllCategory() {
+		List<CategoryEntity> listCategoryEntity = categoryRepository.findAll();
+
+		List<CategoryDTO> listCategoryDTO = new ArrayList<>();
+
+		for (CategoryEntity cateEntity : listCategoryEntity) {
+
+			listCategoryDTO.add(mapper.map(cateEntity, CategoryDTO.class));
+		}
+
+		return listCategoryDTO;
+	}
+
+	@Override
+	public ApiResponse disableStatusCate(long id) {
+
+		CategoryEntity cate = categoryRepository.findOne(id);
+		if (cate == null) {
 			throw new ResourceNotFoundException("Category not exists!");
 		}
 
-		categoryRepository.delete(id);
-		
-		 ApiResponse respone = new ApiResponse();
-		 respone.setHttp(HttpStatus.ACCEPTED);
-		 respone.setMessage("Delete successfull!");
-		 respone.setSuccess(true);
-		return respone;
+		cate.setStatus(SystemConstant.INACTIVE_STATUS);
+		categoryRepository.save(cate);
+
+		return ApiResponse.builder().http(HttpStatus.OK).message("Disable Category Successfull").success(true).build();
+	}
+
+	@Override
+	public ApiResponse activeStatusCate(long id) {
+		CategoryEntity cate = categoryRepository.findOne(id);
+		if (cate == null) {
+			throw new ResourceNotFoundException("Category not exists!");
+		}
+
+		cate.setStatus(SystemConstant.ACTIVE_STATUS);
+		categoryRepository.save(cate);
+
+		return ApiResponse.builder().http(HttpStatus.OK).message("Disable Category Successfull").success(true).build();
 	}
 
 }

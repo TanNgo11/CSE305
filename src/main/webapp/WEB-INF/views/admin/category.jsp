@@ -49,13 +49,8 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Username</th>
-						<th>Full name</th>
-						<th>Email</th>
-						<th>Address</th>
-						<th>Phone Number</th>
-						<th>Status</th>
-						<th>Functions</th>
+						<th>Type</th>
+						<th>Created date</th>
 					</tr>
 				</thead>
 				<tbody id="contentTable">
@@ -82,5 +77,6 @@
 	</main>
 
 
+	<script src="/template/js/AdminRenderCate.js"></script>
 
 </body>

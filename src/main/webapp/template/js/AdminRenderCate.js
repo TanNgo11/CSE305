@@ -4,11 +4,11 @@ var homeConfig = {
 }
 
 
-function loadAllUsers() {
+function loadAllCategories() {
 
     var str = "";
     $.ajax({
-        url: "/admin/api/accounts",
+        url: "/admin/api/categories",
         type: "get",
         data: {
             page: homeConfig.currentPage,
@@ -20,11 +20,6 @@ function loadAllUsers() {
             var totalPages = data.totalPage;
             var currentPage = data.currentPage;
             var listResult = data.listResult;
-
-
-//            console.log(data);
-//            console.log(totalPages);
-//            console.log(currentPage);
 
             const content = document.querySelector("#contentTable");
             var i = 1;

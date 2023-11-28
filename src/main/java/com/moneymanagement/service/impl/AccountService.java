@@ -72,11 +72,11 @@ public class AccountService implements IAccountService {
 		}
 		account.setStatus(SystemConstant.INACTIVE_STATUS);
 		userRepository.save(account);
-		ApiResponse apiResponse = new ApiResponse();
-		apiResponse.setHttp(HttpStatus.OK);
-		apiResponse.setMessage("Disable Account Successfull");
-		apiResponse.setSuccess(true);
-		return apiResponse;
+		return ApiResponse.builder()
+				.http(HttpStatus.OK)
+				.message("Disable Account Successfull")
+				.success(true)
+				.build();
 	}
 
 	@Override
@@ -87,11 +87,13 @@ public class AccountService implements IAccountService {
 		}
 		account.setStatus(SystemConstant.ACTIVE_STATUS);
 		userRepository.save(account);
-		ApiResponse apiResponse = new ApiResponse();
-		apiResponse.setHttp(HttpStatus.OK);
-		apiResponse.setMessage("Active Account Successfull");
-		apiResponse.setSuccess(true);
-		return apiResponse;
+		
+		return ApiResponse.builder()
+					.http(HttpStatus.OK)
+					.message("Active Account Successfull")
+					.success(true)
+					.build();
+		
 	}
 
 	@Override
