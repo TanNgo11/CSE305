@@ -27,7 +27,9 @@ public class CategoryEntity extends BaseEntity {
 
 	@Column(name = "name")
 	private String name;
-
+	
+	@Column(name = "status")
+	private int status;
 	
 	@OneToMany(mappedBy = "categoryEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore

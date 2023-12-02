@@ -37,7 +37,7 @@
 				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
 				<!-- add Product -->
 				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new account</span>
+					<span>Add new Category</span>
 				</a>
 			</div>
 
@@ -49,13 +49,8 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Username</th>
-						<th>Full name</th>
-						<th>Email</th>
-						<th>Address</th>
-						<th>Phone Number</th>
-						<th>Status</th>
-						<th>Functions</th>
+						<th>Type</th>
+						<th>Created date</th>
 					</tr>
 				</thead>
 				<tbody id="contentTable">
@@ -82,5 +77,6 @@
 	</main>
 
 
+	<script src="/template/js/AdminRenderCate.js"></script>
 
 </body>

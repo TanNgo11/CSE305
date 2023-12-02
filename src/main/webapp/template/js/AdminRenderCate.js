@@ -1,14 +1,14 @@
 var homeConfig = {
-    pageSize: 2,
+    pageSize: 10,
     currentPage: 1
 }
 
 
-function loadAllUsers() {
+function loadAllCategories() {
 
     var str = "";
     $.ajax({
-        url: "/admin/api/accounts",
+        url: "/admin/api/categories",
         type: "get",
         data: {
             page: homeConfig.currentPage,
@@ -20,11 +20,6 @@ function loadAllUsers() {
             var totalPages = data.totalPage;
             var currentPage = data.currentPage;
             var listResult = data.listResult;
-
-
-//            console.log(data);
-//            console.log(totalPages);
-//            console.log(currentPage);
 
             const content = document.querySelector("#contentTable");
             var i = 1;
@@ -38,18 +33,14 @@ function loadAllUsers() {
                 }
                 str += `<tr>
                     <th scope="row">${item.id}</th>
-                    <td>${item.username}</td>
-                    <td>${item.fullName}</td>
-                    <td>${item.email}</td>
-                    <td>${item.address}</td>
-                    <td>${item.phoneNumber}</td>
+                    <td>${item.name}</td>
                     <td>${status}</td>
                     <td><button onclick ="activeAccountByID(${item.id})" type="button" class="btn btn-secondary">Active</button>
                           <button onclick ="disableAccountByID(${item.id})" type="button" class="btn btn-secondary">Inactive</button></td>
                 </tr>`
             }
             paging(totalPages, currentPage, function () {
-                loadAllUsers()
+                loadAllCategories()
             });
             content.innerHTML = str;
 
@@ -60,11 +51,11 @@ function loadAllUsers() {
 
 function disableAccountByID(id) {
     $.ajax({
-        url: "/admin/api/account/" + id,
+        url: "/admin/api/category/" + id,
         type: "delete",
         success: function (data) {
             console.log(data);
-            window.onload = loadAllUsers();
+            window.onload = loadAllCategories();
 
 
 
@@ -74,11 +65,11 @@ function disableAccountByID(id) {
 }
 function activeAccountByID(id) {
     $.ajax({
-        url: "/admin/api/account/" + id,
+        url: "/admin/api/category/" + id,
         type: "put",
         success: function (data) {
             console.log(data);
-            window.onload = loadAllUsers();
+            window.onload = loadAllCategories();
 
 
 
@@ -86,7 +77,7 @@ function activeAccountByID(id) {
 
     });
 }
-window.onload = loadAllUsers();
+window.onload = loadAllCategories();
 
 
 function paging(totalPages, currentPage, callback) {
