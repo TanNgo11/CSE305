@@ -8,33 +8,42 @@
 <title>Insert title here</title>
 </head>
 <body >
-	<div class="container">
-		<form>
+ <center>
+        <h1>Add Expense</h1>
 
-			 <input type="hidden" id="id" class="form-control" value="${id}">
+        <div class="col-4">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputItemName" class="form-label"><b>Item Name</b></label>
+                    <input type="text" class="form-control" id="exampleInputItemName">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputCategory" class="form-label"><b>Category</b></label>
+                    <select class="form-select" aria-label="Default select example" id="exampleInputCategory">
+                        <option selected>Food</option>
+                        <option value="1">Shopping</option>
+                        <option value="2">Travel</option>
+                        <option value="3">Health</option>
+                    </select>
 
-		
-			<div class="form-group">
-				<label for="exampleInputEmail1">Amount</label> <input type="number"
-					id="amount" class="form-control" value="${amount}">
+                </div>
+                <div class="mb-3 ">
+                    <label for="exampleInputAmount" class="form-label"><b>Amount</b></label>
+                    <input type="text" class="form-control" id="exampleInputAmount">
 
-			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Category</label> <select
-					id="categories" class="form-control" value="${category}">
+                </div>
+                <div class="mb-3 ">
+                    <label for="exampleInputDate" class="form-label"><b>Expense Date</b></label>
+                    <input type="date" class="form-control" id="exampleInputAmount">
 
+                </div>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-primary" href="Expense.html" role="button">Submit</a>
+                </div>
+            </form>
+        </div>
+    </center>
 
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="">Description</label> <input type="text"
-					id="description" class="form-control" value="${description}">
-			</div>
-
-
-			<button id="editExpense" type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
 	<script type="text/javascript">
 	console.log("hah")
 	let formData = new FormData();

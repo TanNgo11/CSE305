@@ -12,19 +12,14 @@ import com.moneymanagement.utils.MessageUtil;
 @Controller(value = "homeControllerOfWeb")
 public class HomeController {
 
-	
-
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public ModelAndView homePage(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/home");
 
-		if (request.getParameter("msg") != null) {
+		String msgParameter = request.getParameter("msg");
 
-			if (request.getParameter("msg").equals("add_success"))
-				mav.addObject("msg", MessageUtil.SUCCESS_ADD);
-			else {
-				mav.addObject("msg", MessageUtil.ERROR_ADD);
-			}
+		if (msgParameter != null) {
+			mav.addObject("msg", "add_success".equals(msgParameter) ? MessageUtil.SUCCESS_ADD : MessageUtil.ERROR_ADD);
 		}
 
 		return mav;

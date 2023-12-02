@@ -1,8 +1,10 @@
 function loadCategories(){
+	
 	  $.ajax({
 	        url: "/api/categories",
 	        type: "get",
 	        success: function (data) {
+	        	console.log(data)
 	        	const categories= document.querySelector("#categories");
 	        	
 	        	var str =""
@@ -18,6 +20,7 @@ function loadCategories(){
 
 
 
+
 let formData = new FormData();
 
 
@@ -27,6 +30,7 @@ $('#addExpense').click(function(e) {
     formData.append("amount", $("#amount").val());
     formData.append("description", $("#description").val());
     formData.append("cateId", $("#categories").val());
+    formData.append("date", $("#date").val());
     
 
     addExpense(formData);

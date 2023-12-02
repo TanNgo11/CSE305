@@ -1,13 +1,14 @@
 
 
 function loadAllExpense() {
-
+	
     $.ajax({
         url: "/api/expenses",
         type: "get",
         success: function (data) {
         	const content= document.querySelector("#content");
-        	console.log(data)
+        	
+        	var str=""
         		var i =1;
         		for (let item of data) {
         			var date = secondsToDate(item.createdDate)
@@ -18,16 +19,19 @@ function loadAllExpense() {
 						<td>${item.amount}</td>
 						<td>${item.description}</td>
 						<td>${item.categoryDTO.name}</td>
-						<td><button type="button" class="btn btn-primary">Edit</button>
-        			  		<button onclick ="deleteExpenseById(${item.id})" type="button" class="btn btn-secondary">Delete</button></td>
+						<td><button type="button" class="btn btn-light">Edit</button>
+        			  		<button onclick ="deleteExpenseById(${item.id})" type="button" class="btn btn-danger">Delete</button></td>
 					</tr>`
         	}
+        		
         		content.innerHTML=str;
-        	 
+        	
         }
             
     });
 }
+
+window.onload = loadAllExpense();
 function deleteExpenseById(id){
 	$.ajax({
 		url : '/api/expense/'+id,
@@ -66,7 +70,7 @@ function secondsToDate(seconds) {
 	  return `${datePart} ${timePart}`;
 	}
 
-       	var str =""
+     
  
 
 

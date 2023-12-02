@@ -16,11 +16,18 @@ public class ExpenseController {
 	@Autowired
 	private IExpenseService expenseService;
 
-	@RequestMapping(value = { "/add" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/expense/add" }, method = RequestMethod.GET)
 	public ModelAndView addPage() {
 		ModelAndView mav = new ModelAndView("web/add");
 		return mav;
 	}
+	
+	@RequestMapping(value = { "/expense" }, method = RequestMethod.GET)
+	public ModelAndView pageExpense() {
+		ModelAndView mav = new ModelAndView("web/expense");
+		return mav;
+	}
+
 
 	@RequestMapping(value = { "/edit/{id}" }, method = RequestMethod.GET)
 	public ModelAndView editPage(@PathVariable long id) {
