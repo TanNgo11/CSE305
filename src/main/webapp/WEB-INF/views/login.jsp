@@ -11,8 +11,14 @@
 
 	<div id="logreg-forms">
 
-		
-		<form class="form-signin" action="j_spring_security_check"
+		<c:if test="${param.incorrectAccount != null}">
+			<div class="alert alert-danger">Username or password incorrect
+			</div>
+		</c:if>
+		<c:if test="${param.accessDenied != null}">
+			<div class="alert alert-danger">you Not authorize</div>
+		</c:if>
+		<form class="form-signin" action="<c:url value='j_spring_security_check' />"
 			method="POST">
 			<input type="hidden" name="mode" value="login">
 
@@ -115,7 +121,10 @@
 
 	</div>
 
-	
+	<div id="toasts"></div>
+	<c:if test="${param.msg != null}">
+		<input id="message" type="hidden" value="${param.msg}">
+	</c:if>
 
 
 

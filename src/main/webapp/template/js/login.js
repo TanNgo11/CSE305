@@ -26,7 +26,7 @@ $('#signUpAccount').click(function (e) {
 	    	var data = {};
 		    var userName = $('#username').val().trim();
 		    var fullName = $('#fullName').val().trim();  
-		    data["username"] = userName
+		    data["username"] = userName;
 		    data["fullName"] = fullName;
 		    data["password"] = password;
 		  

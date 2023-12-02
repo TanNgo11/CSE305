@@ -41,11 +41,11 @@
 	<div class="table-data">
 		<div class="order">
 			<div class="head">
-				<h3>Product list</h3>
+				<h3>User list</h3>
 				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
 				<!-- add Product -->
 				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new product</span>
+					<span>Add new account</span>
 				</a>
 			</div>
 
@@ -56,12 +56,13 @@
 			<table >
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Image</th>
-						<th>Price</th>
-						<th>Sale Price</th>
-
+						<th>#</th>
+						<th>Username</th>
+						<th>Full name</th>
+						<th>Email</th>
+						<th>Address</th>
+						<th>Phone Number</th>
+						<th>Status</th>
 						<th>Functions</th>
 					</tr>
 				</thead>
@@ -87,52 +88,9 @@
 	</div>
 
 	</main>
-	<script src="/template/js/adminRenderProduct.js"></script>
+	<script src="/template/js/AdminRenderUser.js"></script>
 
-	<script>
-		function deleteProduct(id) {
 
-			$.confirm({
-				title : 'Confirm!',
-				content : 'Simple confirm!',
-				buttons : {
-					confirm : function() {
-						$.alert('Confirmed!');
-						doDeleteById(id)
-					},
-					cancel : function() {
-						$.alert('Canceled!');
-					},
-					somethingElse : {
-						text : 'Something else',
-						btnClass : 'btn-blue',
-						keys : [ 'enter', 'shift' ],
-						action : function() {
-							$.alert('Something else?');
-						}
-					}
-				}
-			});
-
-		}
-		function doDeleteById(id) {
-			$.ajax({
-				url : '/admin/api/v1/products/' + id,
-				type : 'DELETE',
-				contentType : 'application/json',
-				success : function(result) {
-					document.getElementById("message").value = "success_delete"
-					window.onload = renderProducts();
-				},
-				error : function(error) {
-					document.getElementById("message").value = "error_delete"
-					let msg = document.getElementById("message");
-					createToast(msg.value);
-					msg.value = "";
-				}
-			});
-		}
-	</script>
 
 </body>
 </html>

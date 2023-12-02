@@ -8,88 +8,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<main>
+	<header>
+		<h1 class="title">Expense tracker</h1>
+		<h3 class="title">Home</h3>
+		<h3 class="title">About</h3>
+		<h3 class="title">Contact</h3>
 
 
-	<div class="container" id="section_food">
-
-		<h3 class="mt-5 title foodTitle">FOOD</h3>
-		<div class="row mt-2 d-flex align-items-stretch" id="rowFood">
-
-
-			<c:forEach items="${foodModel.listResult}" var="o">
-				
-				<div class="col-md-3 col-12 mt-4">
-
-					<div class="card h-100 foodCard">
-						<a href="detail?pid=${o.id}"> <img class="card-img-top"
-						
-							src="${o.img}" alt="Card image cap">
-							
-						</a>
-
-						<div class="card-body">
-							<h5 class="card-title">${o.productName}</h5>
-							<p class="card-text">${o.price}$</p>
-							<button style="width: 90%" onClick="addToCart(${o.id})"
-								class="btn btn-primary addToCart">Add to cart</button>
-						</div>
-					</div>
-
-
-
-				</div>
-
-			</c:forEach>
-		</div>
-
-		<button class="btn btn-outline-primary mt-3"
-			onClick="loadMoreProduct('food')">Load more</button>
-
-
-	</div>
-	<div class="container" id="section_drink">
-
-		<h3 class="mt-5 title">DRINK</h3>
-		<div class="row mt-2 d-flex align-items-stretch" id="rowDrink">
-
-
-			<c:forEach items="${drinkModel.listResult}" var="o">
-
-				<div class="col-md-3 col-12 mt-4">
-
-					<div class="card h-100 drinkCard">
-						<a href="detail?pid=${o.id}"> <img class="card-img-top"
-							src="${o.img}" alt="Card image cap">
-						</a>
-
-						<div class="card-body">
-							<h5 class="card-title">${o.productName}</h5>
-							<p class="card-text">${o.price}$</p>
-							<button style="width: 90%" onClick="addToCart(${o.id})"
-								class="btn btn-primary addToCart">Add to cart</button>
-						</div>
-					</div>
-
-
-
-				</div>
-
-			</c:forEach>
-
-		</div>
-
-		<button class="btn btn-outline-primary mt-3"
-			onClick="loadMoreProduct('drink')">Load more</button>
-
-
-	</div>
+	</header>
 	<div class="container">
-		<h3 class="mt-5 title">NEWS</h3>
-		<div class="row mt-2 d-flex align-items-stretch"></div>
-	</div>
+		<h1>Personal Expense Manager</h1>
+		<button type="button" class="btn btn-outline-primary">Add
+			expense</button>
+		<button type="button" class="btn btn-outline-secondary">Expense
+			report</button>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Date</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Description</th>
+					<th scope="col">Category</th>
+					<th scope="col">Function</th>
+				</tr>
+			</thead>
+			<tbody id="content">
+				
+				
 
 
-	</main>
+			</tbody>
+		</table>
 </body>
 </html>

@@ -59,7 +59,7 @@ const toasts = {
     },
     error_add: {
         icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Add new product unsuccess !',
+        msg: 'Add unsuccess !',
         alert: 'error'
     },
     error_update: {
