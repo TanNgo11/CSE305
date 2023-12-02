@@ -12,7 +12,7 @@ import com.moneymanagement.utils.MessageUtil;
 @Controller(value = "homeControllerOfWeb")
 public class HomeController {
 
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public ModelAndView homePage(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/home");
 
@@ -25,4 +25,5 @@ public class HomeController {
 		return mav;
 	}
 
+	
 }

@@ -1,5 +1,6 @@
 package com.moneymanagement.api.web;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class ExpenseAPI {
 		ExpenseDTO expenseDTO = new ExpenseDTO();
 		expenseDTO.setAmount(amount);
 		expenseDTO.setDescription(description);
+
 		return new ResponseEntity<ExpenseDTO>(expenseService.saveExpenseDTO(expenseDTO, cateId), HttpStatus.OK);
 	}
 

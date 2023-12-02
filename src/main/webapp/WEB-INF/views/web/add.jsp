@@ -8,30 +8,37 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
-		<form>
-			<div class="form-group">
-				<label for="exampleInputEmail1">Amount</label> <input type="number"
-					id="amount" class="form-control">
+	   <center>
+        <h1>Add Expense</h1>
 
-			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Category</label> <select
-					id="categories" class="form-control">
+        <div class="col-4">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputItemName" class="form-label"><b>Description</b></label>
+                    <input type="text" class="form-control" id="description">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputCategory" class="form-label"><b>Category</b></label>
+                    <select class="form-select" aria-label="Default select example" id="categories">
+                      
+                    </select>
 
+                </div>
+                <div class="mb-3 ">
+                    <label for="exampleInputAmount" class="form-label"><b>Amount</b></label>
+                    <input type="text" class="form-control" id="amount">
 
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="">Description</label> <input type="text"
-					id="description" class="form-control">
-			</div>
-
-
-			<button id="addExpense" type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
-	<script src="<c:url value='/template/js/ExpenseAndCategoreis.js'/>"></script>
+                </div>
+               
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" id="addExpense">Submit</button>
+                </div>
+            </form>
+        </div>
+    </center>
+	
+	
+	<script src="<c:url value='/template/js/ExpenseAndCategories.js'/>"></script>
 	<script type="text/javascript">
 		window.onload = loadCategories();
 	</script>
