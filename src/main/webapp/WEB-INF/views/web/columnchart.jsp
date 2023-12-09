@@ -1,3 +1,4 @@
+<!-- chart.jsp-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,56 +9,62 @@
 
 </head>
 <body>
-	<script type="text/javascript">
-		window.onload = function() {
+<script type="text/javascript">
+	window.onload = function() {
 
-			var dps = [ [] ];
-			var chart = new CanvasJS.Chart("chartContainer", {
-				theme : "light2", //"light1", "dark1", "dark2"
-				animationEnabled : true,
-				title : {
-					text : "Iron Ore Production in India"
-				},
-				axisX : {
-					valueFormatString : "MMM"
-				},
-				axisY : {
-					title : "Production (in million tonnes)",
-					maximum : 10000
-				},
-				data : [ {
-					type : "column",
-					xValueType : "dateTime",
-					xValueFormatString : "MMM",
-					yValueFormatString : "#,##0mn tonnes",
-					dataPoints : dps[0]
-				} ]
-			});
+		var dps = [ [] ];
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled : true,
+			theme : "light2", // "light1", "dark1", "dark2"
+			title : {
+				text : "Expense In ${year}"
+			},
+			subtitles : [ {
+				text : "Based on month"
+			} ],
+			axisY : {
+				title : "VND",
+				suffix : " VND"
+			},
+			axisX : {
+				title : "Months"
+			},
+			data : [ {
+				type : "column",
+				 yValueFormatString: "#,##0 VND",
+				dataPoints : dps[0]
+			} ]
+		});
 
-			var xValue;
-			var yValue;
+		var yValue;
+		var label;
 
-			<c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
-			<c:forEach items="${dataPoints}" var="dataPoint">
-			xValue = parseInt("${dataPoint.x}");
-			yValue = parseFloat("${dataPoint.y}");
-			label = "${dataPoint.label}";
-			indexLabel = "${dataPoint.indexLabel}";
-			dps[parseInt("${loop.index}")].push({
-				x : xValue,
-				y : yValue
-			});
-			</c:forEach>
-			</c:forEach>
+		<c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
+		<c:forEach items="${dataPoints}" var="dataPoint">
+		yValue = parseFloat("${dataPoint.y}");
+		label = "${dataPoint.label}";
+		dps[parseInt("${loop.index}")].push({
+			label : label,
+			y : yValue,
+		});
+		</c:forEach>
+		</c:forEach>
 
-			chart.render();
+		chart.render();
 
+	}
+	
+	const currentURL = window.location.href;
+	const yearMatch = currentURL.match(/\/chart\/columnchart\/(\d{4})/);
+	
+	if (yearMatch) {
+		  const year = parseInt(yearMatch[1], 10);
+		 
+		} else {
+		  console.error('Year not found in the URL');
 		}
-	</script>
-	
-		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-	
-
+</script>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 </html>

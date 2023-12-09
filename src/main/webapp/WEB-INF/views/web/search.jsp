@@ -11,20 +11,7 @@
 
 	<div class="container">
 
-		<ul style="text-align: center" class="box-info customThreeBlocks">
-			<li><i class="bx bxs-calendar-check"></i> <span class="text">
-					<h3 id="budget"></h3>
-					<p>Budget</p>
-			</span></li>
-			<li><i class="bx bxs-group"></i> <span class="text">
-					<h3 id="currentAmount">2834 VND</h3>
-					<p>Current total amount</p>
-			</span></li>
-			<li><span style="display: block;width:100%" class="text">
-					<h3 id="endDate">2543 VND</h3>
-					<p>End Date</p>
-			</span></li>
-		</ul>
+		<h2>Search</h2>
 
 
 
@@ -37,18 +24,16 @@
 					value="Expense Report"
 					onclick="window.location.href='chart/piechart?type=week'">
 					<input class="btn btn-success btn-lg" type="button"
-					value="Set Budget" onclick="window.location.href='/budget'">
-					<input class="btn btn-success btn-lg" type="button"
-					value="Export to Excel" onclick="window.location.href='/excel'">
-					</a>
+					value="Set Budget" onclick="window.location.href='/budget'"></a>
 
 
 
 
 				<form class="d-flex" role="search">
-					<input id="query" class="form-control me-2" type="search" placeholder="Search"
-						aria-label="Search"> <input value="Filter" onclick='linkToSearchPage($("#query").val())' id="filter" class="btn btn-info"
-						type="button" ></a>
+					<input id="query" class="form-control me-2" type="search"
+						placeholder="Search" aria-label="Search"> <input
+						value="Filter" onclick='linkToSearchPage($("#query").val())'
+						id="filter" class="btn btn-info" type="button"></a>
 				</form>
 			</div>
 		</nav>
@@ -72,7 +57,7 @@
 		<ul id="pagination" class="pagination"></ul>
 	</div>
 
-	<script src="<c:url value='/template/js/main.js'/>"></script>
+	<script src="<c:url value='/template/js/Search.js'/>"></script>
 
 </body>
 </html>

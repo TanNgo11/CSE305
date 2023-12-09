@@ -15,6 +15,8 @@ public interface IAccountService {
 	AccountDTO findById(long userId);
 
 	List<AccountDTO> getAllAccounts(Pageable pageable);
+	
+	List<AccountDTO> getAllAccounts();
 
 	ApiResponse disableStatusAccount(long id);
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.moneymanagement.dto.ExpenseDTO;
@@ -28,17 +29,22 @@ public class ExpenseController {
 		return mav;
 	}
 
+	
+	@RequestMapping(value = { "/expense/search" }, method = RequestMethod.GET)
+	public ModelAndView pageSearchExpense(	@RequestParam(required = false) String q) {
+		ModelAndView mav = new ModelAndView("web/search");
+		return mav;
+	}
 
-	@RequestMapping(value = { "/edit/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/expense/edit/{id}" }, method = RequestMethod.GET)
 	public ModelAndView editPage(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView("web/edit");
 
-		ExpenseDTO expenseDTO = expenseService.getExpenseByID(id);
-		mav.addObject("id", expenseDTO.getId());
-		mav.addObject("amount", expenseDTO.getAmount());
-		mav.addObject("category", expenseDTO.getCategoryDTO().getId());
-		mav.addObject("description", expenseDTO.getDescription());
+		
 		return mav;
 	}
 
 }
+
+
+

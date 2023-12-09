@@ -1,23 +1,44 @@
-
 var homeConfig = {
     pageSize: 10,
     currentPage: 1
 }
 
 
-function loadAllExpense() {
+
+
+
+var queryString = window.location.search;
+
+
+var urlParams = new URLSearchParams(queryString);
+
+
+var qValue = urlParams.get('q');
+
+function linkToSearchPage(query) {
+	
+	   window.location.href = "/expense/search?q="+query
+}
+
+
+
+function loadAllSearchExpense(qValue) {
 	
     $.ajax({
-        url: "/api/expenses",
+        url: "/api/expenses/search?q="+qValue,
         type: "get",
         data: {
             page: homeConfig.currentPage,
             limit: homeConfig.pageSize
         },
         success: function (data) {
+        	
         	 var totalPages = data.totalPage;
         	
              var currentPage = data.page;
+             
+          
+             
              const content= document.querySelector("#content");
              let listResult = data.listResult
              var i = 1 * currentPage ;
@@ -39,7 +60,7 @@ function loadAllExpense() {
 					</tr>`
         	}
         		 paging(totalPages, currentPage, function () {
-        			 loadAllExpense()
+        			 loadAllSearchExpense(qValue)
                  });
         		
         		content.innerHTML=str;
@@ -49,11 +70,6 @@ function loadAllExpense() {
     });
 }
 
-window.onload = initPage()
-function initPage(){
-	 loadAllExpense();
-	loadCurrentBudget()
-}
 
 function paging(totalPages, currentPage, callback) {
 
@@ -143,13 +159,10 @@ function formatVND(number) {
 	  
 }
 
-function linkToSearchPage(query) {
-	
-   window.location.href = "/expense/search?q="+query
+
+
+window.onload = initPage()
+function initPage(){
+	loadAllSearchExpense(qValue);
+	loadCurrentBudget()
 }
-
-
-     
- 
-
-

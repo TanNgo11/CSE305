@@ -23,15 +23,23 @@ public class AccountAPI {
 	private IAccountService accountService;
 
 	@GetMapping("/admin/api/accounts")
-	public ResponseEntity<AccountDTO> getAllAccounts(@RequestParam int page, @RequestParam int limit) {
+	public ResponseEntity<AccountDTO> getAllAccounts(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer limit) {
 		AccountDTO result = new AccountDTO();
-		Pageable pageable = new PageRequest(page - 1, limit);
 
-		result.setPage(page);
-		result.setLimit(limit);
-		result.setListResult(accountService.getAllAccounts(pageable));
-		result.setTotalItem(accountService.getTotalItem());
-		result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
+		if (page != null && limit != null) {
+
+			Pageable pageable = new PageRequest(page - 1, limit);
+			result.setPage(page);
+			result.setLimit(limit);
+			result.setListResult(accountService.getAllAccounts(pageable));
+			result.setTotalItem(accountService.getTotalItem());
+			result.setTotalPage((int) Math.ceil((double) result.getTotalItem() / result.getLimit()));
+		} else {
+			
+			result.setListResult(accountService.getAllAccounts());
+		}
+		
 
 		return new ResponseEntity<AccountDTO>(result, HttpStatus.OK);
 	}

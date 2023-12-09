@@ -2,6 +2,7 @@ package com.moneymanagement.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,9 @@ public class BudgetService implements IBudgetService {
 
 	@Autowired
 	private BudgetConverter budgetConverter;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
 	@Transactional
@@ -85,6 +89,18 @@ public class BudgetService implements IBudgetService {
 		BudgetEntity budgetEntity = budgetRepository.findByStatusAndAccountEntity(SystemConstant.ACTIVE_STATUS,
 				accountEntity);
 		return budgetEntity;
+	}
+
+
+
+	@Override
+	public BudgetDTO findTheActiveBudgetDTO() {
+		AccountEntity accountEntity = userRepository
+				.findOneByUserNameAndStatus(SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
+
+		BudgetEntity budgetEntity = budgetRepository.findByStatusAndAccountEntity(SystemConstant.ACTIVE_STATUS,
+				accountEntity);
+		return mapper.map(budgetEntity, BudgetDTO.class);
 	}
 
 }

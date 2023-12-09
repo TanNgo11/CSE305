@@ -20,10 +20,10 @@ function setBudget(amount, endDate) {
 		data: JSON.stringify(form),
 		contentType: 'application/json',
 		success : function(result) {
-			window.location.href = "/home?msg=add_success";
+			createToast("success_add")
 		},
 		error : function(error) {
-			window.location.href = "/home?msg=add_error";
+			createToast("error_add")
 			
 		}
 	});

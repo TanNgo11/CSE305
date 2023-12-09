@@ -8,24 +8,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
-		<form>
 
 
-			<div class="form-group">
-				<label for="exampleInputEmail1">Target Amount</label> <input
-					type="number" id="amount" class="form-control">
 
-			</div>
 
-			<div class="form-group">
-				<label for="exampleInputEmail1">End Date</label> <input id="endDate"
-					type="date" class="form-control">
 
-			</div>
-			<button id="addBudget" type="button" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
+	<center class="mt-5 customeText">
+
+		<div class="col-4 customForm">
+			<form>
+
+				<div class="mb-3 ">
+					<label for="exampleInputAmount" class="form-label"><b>Amount</b></label>
+					<input type="number" class="form-control" id="amount" required>
+
+				</div>
+
+				<div class="mb-3 ">
+					<label for="exampleInputAmount" class="form-label"><b>End
+							Date</b></label> <input type="date" class="form-control" id="endDate"
+						required>
+
+				</div>
+
+				<div class="d-grid gap-2">
+					<button class="btn btn-primary" id="addBudget" role="button">Submit</button>
+				</div>
+			</form>
+		</div>
+	</center>
+
+
+
 
 	<script src="<c:url value='/template/js/budget.js'/>"></script>
 

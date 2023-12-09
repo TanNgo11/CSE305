@@ -35,20 +35,45 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
 
-<link rel="stylesheet"
-	href="<c:url value='/template/css/toastmsg.css'/>">
 
 
 
-<script src="<c:url value='/template/js/main.js'/>"></script>
+
+
 
 
 
 
 <c:if
-	test="${pageContext.request.localName =='http://localhost:8080/expense'}">
+	test="${not fn:startsWith(pageContext.request.requestURI, '/chart')}">
 	<link rel="stylesheet" href="<c:url value='/template/css/text.css'/>">
+
 </c:if>
+
+<c:if
+	test="${fn:startsWith(pageContext.request.requestURI, '/expense')}">
+	<link rel="stylesheet"
+		href="<c:url value='/template/css/expense.css'/>">
+</c:if>
+
+<c:if
+	test="${fn:startsWith(pageContext.request.requestURI, '/budget')}">
+	<link rel="stylesheet"
+		href="<c:url value='/template/css/expense.css'/>">
+</c:if>
+
+<c:if test="${fn:startsWith(pageContext.request.requestURI, '/home')}">
+	<link rel="stylesheet" href="<c:url value='/template/css/homne.css'/>">
+</c:if>
+
+
+
+<style>
+.canvasjs-chart-credit {
+display:none
+	
+}
+</style>
 
 
 
@@ -61,22 +86,30 @@
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/d6d3d20d54.js"
 	crossorigin="anonymous"></script>
-
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
 
-	<%@ include file="/common/web/Header.jsp"%>
+	<c:if
+		test="${ not fn:startsWith(pageContext.request.requestURI, '/home')}">
+		<%@ include file="/common/web/Header.jsp"%>
+	</c:if>
+
 
 	<div class="container">
 		<dec:body />
 	</div>
 
 
+	
 
-	<div id="toasts">
-		<input id="message" type="hidden" value="${msg}">
-	</div>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+	<script
+		src="<c:url value='/template/paging/jquery.twbsPagination.js'/>"></script>
+	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 	<script
@@ -103,7 +136,8 @@
 	</script>
 
 
-	<script src="<c:url value='/template/js/toastmessage.js'/>"></script>
+
+
 
 
 

@@ -1,15 +1,19 @@
 package com.moneymanagement.service.impl;
 
+import java.text.DateFormatSymbols;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,13 +48,13 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 		List<Map<Object, Object>> dataPoints1 = new ArrayList<Map<Object, Object>>();
 
 		List<CategoryEntity> listCategories = categoryRepository.findAll();
-		Map<CategoryEntity, Double> mapExpense = calculatePercentByCurrentTime(listCategories, type);
+		Map<String, Double> mapExpense = calculatePercentByCurrentTime(listCategories, type);
 
-		for (Map.Entry<CategoryEntity, Double> entry : mapExpense.entrySet()) {
-			CategoryEntity category = entry.getKey();
+		for (Map.Entry<String, Double> entry : mapExpense.entrySet()) {
+			String categoryName = entry.getKey();
 			Double percentage = entry.getValue();
 			map = new HashMap<Object, Object>();
-			map.put("label", category.getName());
+			map.put("label", categoryName);
 			map.put("y", percentage);
 			dataPoints1.add(map);
 
@@ -67,13 +71,12 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 		List<List<Map<Object, Object>>> list = new ArrayList<List<Map<Object, Object>>>();
 		List<Map<Object, Object>> dataPoints1 = new ArrayList<Map<Object, Object>>();
 
-		Map<Long, Double> mapExpense = getMonthlyAmountInOneYear(year);
+		Map<String, Double> mapExpense = getMonthlyAmountInOneYear(year);
 
-		for (Entry<Long, Double> entry : mapExpense.entrySet()) {
+		for (Entry<String, Double> entry : mapExpense.entrySet()) {
 			map = new HashMap<Object, Object>();
-			map.put("x", entry.getKey());
+			map.put("label", entry.getKey());
 			map.put("y", entry.getValue());
-			dataPoints1.add(map);
 			dataPoints1.add(map);
 
 		}
@@ -84,8 +87,7 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 
 	}
 
-	private Map<CategoryEntity, Double> calculatePercentByCurrentTime(List<CategoryEntity> listCategories,
-			String type) {
+	private Map<String, Double> calculatePercentByCurrentTime(List<CategoryEntity> listCategories, String type) {
 
 		AccountEntity accountEntity = userRepository
 				.findOneByUserNameAndStatus(SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
@@ -109,12 +111,13 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 		}
 
 		Double sum = totalAmount(listExpense);
-		Map<CategoryEntity, Double> map = new HashMap<>();
+		Map<String, Double> map = new HashMap<>();
 		for (ExpenseEntity expenseEntity : listExpense) {
-			Double oldValue = map.get(expenseEntity);
+			Double oldValue = map.get(expenseEntity.getCategoryEntity().getName());
+
 			Double currentPercent = expenseEntity.getAmount() / sum * 100;
-			map.put(expenseEntity.getCategoryEntity(),
-					oldValue == null ? oldValue = currentPercent : currentPercent + oldValue);
+			map.put(expenseEntity.getCategoryEntity().getName(),
+					oldValue == null ? currentPercent : currentPercent + oldValue);
 
 		}
 
@@ -126,11 +129,13 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 		Double sum = 0.0;
 		for (ExpenseEntity expenseEntity : listExpense) {
 			sum += expenseEntity.getAmount();
+
 		}
+
 		return sum;
 	}
 
-	private Map<CategoryEntity, Double> calculatePercentByMonthAndYear(List<CategoryEntity> listCategories, int month,
+	private Map<String, Double> calculatePercentByMonthAndYear(List<CategoryEntity> listCategories, int month,
 			int year) {
 
 		AccountEntity accountEntity = userRepository
@@ -140,12 +145,13 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 				.orElseThrow(() -> new ResourceNotFoundException("Can not found any expense"));
 
 		Double sum = totalAmount(listExpenseEntity);
-		Map<CategoryEntity, Double> map = new HashMap<>();
+		Map<String, Double> map = new HashMap<>();
 		for (ExpenseEntity expenseEntity : listExpenseEntity) {
-			Double oldValue = map.get(expenseEntity);
+			Double oldValue = map.get(expenseEntity.getCategoryEntity().getName());
+
 			Double currentPercent = expenseEntity.getAmount() / sum * 100;
-			map.put(expenseEntity.getCategoryEntity(),
-					oldValue == null ? oldValue = currentPercent : currentPercent + oldValue);
+			map.put(expenseEntity.getCategoryEntity().getName(),
+					oldValue == null ? currentPercent : currentPercent + oldValue);
 
 		}
 
@@ -153,38 +159,39 @@ public class CanvasjsChartService implements ICanvasjsChartService {
 
 	}
 
-	private Map<Long, Double> getMonthlyAmountInOneYear(int year) {
-
-		Map<Long, Double> map = new HashMap<>();
+	private Map<String, Double> getMonthlyAmountInOneYear(int year) {
+		Map<String, Double> map = new HashMap<>();
 		AccountEntity accountEntity = userRepository
 				.findOneByUserNameAndStatus(SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
 		List<ExpenseEntity> listExpense = expenseRepository.findAllExpensesByAccountAndYear(accountEntity, year);
 
 		for (ExpenseEntity expenseEntity : listExpense) {
-			long timestamp = convertMonthToTimestamp(year, extractMonthFromDate(expenseEntity.getCreatedDate()));
+			String month = extractMonthFromDate(expenseEntity.getCreatedDate());
 
-			map.put(timestamp, map.get(timestamp) == null ? expenseEntity.getAmount()
-					: map.get(timestamp) + expenseEntity.getAmount());
+			map.put(month,
+					map.get(month) == null ? expenseEntity.getAmount() : map.get(month) + expenseEntity.getAmount());
 		}
 
-		return map;
+		Comparator<String> monthComparator = Comparator
+				.comparingInt(month -> Arrays.asList(new DateFormatSymbols().getMonths()).indexOf(month));
+
+		Map<String, Double> sortedMap = new TreeMap<>(monthComparator);
+		sortedMap.putAll(map);
+
+		return sortedMap;
 	}
 
-	public static int extractMonthFromDate(Date date) {
-
+	public static String extractMonthFromDate(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
-		return calendar.get(Calendar.MONTH) + 1;
+		int monthNumber = calendar.get(Calendar.MONTH) + 1;
+		return monthNumberToString(monthNumber);
 	}
 
-	public static long convertMonthToTimestamp(int year, int month) {
+	public static String monthNumberToString(int month) {
 
-		LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
-
-		Instant instant = firstDayOfMonth.atStartOfDay().atZone(ZoneOffset.UTC).toInstant();
-
-		return instant.toEpochMilli();
+		return new DateFormatSymbols().getMonths()[month - 1];
 	}
 
 }

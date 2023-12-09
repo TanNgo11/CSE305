@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -55,12 +56,10 @@ public class ExpenseService implements IExpenseService {
 	private BudgetRepository budgetRepository;
 
 	@Override
-	public List<ExpenseDTO> getAllExpense() {
+	public List<ExpenseDTO> getAllExpenseByAccount(AccountEntity accountEntity, Pageable pageable) {
 
-		AccountEntity accountEntity = userRepository
-				.findOneByUserNameAndStatus(SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
 		List<ExpenseEntity> lisExpenseEntity = expenseRepository
-				.findAllByAccountEntityOrderByCreatedDateDesc(accountEntity);
+				.findAllByAccountEntityOrderByCreatedDateDesc(accountEntity, pageable);
 
 		List<ExpenseDTO> listExpenseDTO = new ArrayList<>();
 
@@ -80,6 +79,9 @@ public class ExpenseService implements IExpenseService {
 		if (expenseEntity == null) {
 			throw new ResourceNotFoundException("Expense not exists!");
 		}
+		if (expenseEntity.getAccountEntity().getId() != SecurityUtils.getPrincipal().getId())
+			throw new ResourceNotFoundException("Access Denied");
+
 		CategoryEntity cateEntity = expenseEntity.getCategoryEntity();
 
 		ExpenseDTO expenseDTO = mapper.map(expenseRepository.getOne(id), ExpenseDTO.class);
@@ -140,17 +142,35 @@ public class ExpenseService implements IExpenseService {
 
 	@Override
 	public ExpenseDTO editExpenseDTO(ExpenseDTO expenseDTO) {
+		// get current account
+		AccountEntity accountEntity = userRepository
+				.findOneByUserNameAndStatus(SecurityUtils.getPrincipal().getUsername(), SystemConstant.ACTIVE_STATUS);
+		// do the logic in budget
+		ExpenseEntity oldExpense = expenseRepository.getOne(expenseDTO.getId());
+		BudgetEntity budgetEntity = budgetService.findTheActiveBudget();
+		if (budgetEntity == null)
+			throw new ResourceNotFoundException("Not Found current Budget");
 
-		ExpenseEntity expenseEntity = expenseRepository.findOne(expenseDTO.getId());
+		budgetEntity
+				.setCurrentAmount(budgetEntity.getCurrentAmount() - oldExpense.getAmount() + expenseDTO.getAmount());
+		System.out.println(budgetEntity.getCurrentAmount());
+		System.out.println(budgetEntity.getId());
+		CategoryEntity cateEntity = categoryRepository.findOne(expenseDTO.getCategoryDTO().getId());
+		// map new expense
+		ExpenseEntity updatedExpense = 
+				oldExpense
+				.toBuilder()
+				.categoryEntity(cateEntity)
+				.accountEntity(accountEntity)
+				.amount(expenseDTO.getAmount())
+				.description(expenseDTO.getDescription())
+				.budgetEntity(budgetEntity)
+				.build();
 
-		if (expenseEntity == null) {
-			throw new ResourceNotFoundException("Expense not exists!");
-		}
-		expenseEntity = expenseConverter.toEntity(expenseEntity, expenseDTO);
+		expenseRepository.save(updatedExpense);
+		budgetRepository.save(budgetEntity);
 
-		expenseRepository.save(expenseEntity);
-
-		return mapper.map(expenseEntity, ExpenseDTO.class);
+		return mapper.map(updatedExpense, ExpenseDTO.class);
 	}
 
 	@Override
@@ -167,9 +187,64 @@ public class ExpenseService implements IExpenseService {
 	}
 
 	@Override
-	public int getTotalExpense() {
+	public int getTotalExpenseByAccount(AccountEntity accountEntity) {
 
-		return (int) expenseRepository.count();
+		return (int) expenseRepository.countByAccountEntity(accountEntity);
+	}
+
+	@Override
+	public List<ExpenseDTO> getAllExpenseByAccount(AccountEntity accountEntity) {
+		List<ExpenseEntity> lisExpenseEntity = expenseRepository
+				.findAllByAccountEntityOrderByCreatedDateDesc(accountEntity);
+
+		List<ExpenseDTO> listExpenseDTO = new ArrayList<>();
+
+		for (ExpenseEntity expenseEntity : lisExpenseEntity) {
+			CategoryDTO cateDTO = mapper.map(expenseEntity.getCategoryEntity(), CategoryDTO.class);
+			ExpenseDTO expenseDTO = mapper.map(expenseEntity, ExpenseDTO.class);
+			expenseDTO.setCategoryDTO(cateDTO);
+
+			listExpenseDTO.add(expenseDTO);
+		}
+		return listExpenseDTO;
+	}
+
+	@Override
+	public List<ExpenseDTO> searchExpenses(String searchTerm ,AccountEntity accountEntity, Pageable pageable) {
+		Page<ExpenseEntity> SearchExpensePage = expenseRepository.searchExpenses(searchTerm,accountEntity,pageable);
+		List<ExpenseEntity> listSearchExpense = SearchExpensePage.getContent();
+		List<ExpenseDTO> listExpenseDTO = new ArrayList<>();
+
+		for (ExpenseEntity expenseEntity : listSearchExpense) {
+			CategoryDTO cateDTO = mapper.map(expenseEntity.getCategoryEntity(), CategoryDTO.class);
+			ExpenseDTO expenseDTO = mapper.map(expenseEntity, ExpenseDTO.class);
+			expenseDTO.setCategoryDTO(cateDTO);
+
+			listExpenseDTO.add(expenseDTO);
+		}
+		return listExpenseDTO;
+
+	}
+
+	@Override
+	public int countSearchExpenses(String query, AccountEntity accountEntity) {
+	return (int) expenseRepository.countSearchExpenses(query, accountEntity);
+	}
+
+	@Override
+	public List<ExpenseDTO> searchExpenses(String searchTerm, AccountEntity accountEntity) {
+		
+		List<ExpenseEntity> listSearchExpense = expenseRepository.searchExpenses(searchTerm, accountEntity);
+		List<ExpenseDTO> listExpenseDTO = new ArrayList<>();
+
+		for (ExpenseEntity expenseEntity : listSearchExpense) {
+			CategoryDTO cateDTO = mapper.map(expenseEntity.getCategoryEntity(), CategoryDTO.class);
+			ExpenseDTO expenseDTO = mapper.map(expenseEntity, ExpenseDTO.class);
+			expenseDTO.setCategoryDTO(cateDTO);
+
+			listExpenseDTO.add(expenseDTO);
+		}
+		return listExpenseDTO;
 	}
 
 }

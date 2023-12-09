@@ -1,98 +1,70 @@
-
-
-
 const toasts = {
-    success_add: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Add successful !',
-        alert: 'success'
-    },
-    success_signUp: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Sign up successful !',
-        alert: 'success',
-    },
-    success_delete: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Delete successful !',
-        alert: 'success',
-    },
-    success_update: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Update successful !',
-        alert: 'success',
-    },
-    success_change: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Change successful !',
-        alert: 'success'
-    },
-    success_order: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Order successful !',
-        alert: 'success'
-    },
-    success: {
-        icon: '<i class="fa fa-check-circle" aria-hidden="true"></i>',
-        msg: 'Buy successful !',
-        alert: 'success'
-    },
-    error_login: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'You need to login !',
-        alert: 'error'
-    },
-    error_empty: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Your cart is empty !',
-        alert: 'error'
-    },
-    error_signUp: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Sign up unsuccess !',
-        alert: 'error'
-    },
-    error_delete: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Delete unsuccess !',
-        alert: 'error'
-    },
-    error_add: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'Add unsuccess !',
-        alert: 'error'
-    },
-    error_update: {
-        icon: '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
-        msg: 'update product unsuccess !',
-        alert: 'error'
-    }
+
+	success_add : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Add Expense successful!',
+		alert : [ '#4dff4d', '#00b300' ]
+	},
+	
+
+	success_delete : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Delete Expense successful!',
+		alert : [ '#4dff4d', '#00b300' ]
+	},
+	
+	success_update : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Update Expense successful!',
+		alert : [ '#4dff4d', '#00b300' ]
+	},
+	
+	error_add : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Add Expense unsuccessful!',
+		alert : [ '#ff0000', '#803300' ]
+	},
+	
+	error_delete : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Delete Expense unsuccessful!',
+		alert : [ '#ff0000', '#803300' ]
+	},
+	
+	error_update : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Update Expense unsuccessful!',
+		alert : [ '#ff0000', '#803300' ]
+	},
+
+	error_notFound : {
+		icon : '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>',
+		msg : 'Not Found Resource!',
+		alert : [ '#ff0000', '#803300' ]
+	}
+
 }
 
 function createToast(status) {
-    let toast = document.createElement('div')
-    toast.className = `toast ${status} ${toasts[status].alert}`
+	let toast = toasts[status]
 
-    toast.innerHTML = `
-    ${toasts[status].icon}
-    <span class="msg">${toasts[status].msg}</span>
-    <span class="countdown"></span>
-    `
-    document.querySelector('#toasts').appendChild(toast)
+	Toastify(
+			{
+				text : toast.msg,
+				duration : 3000,
 
-    setTimeout(() => {
-        toast.style.animation = 'hide_slide 1s ease forwards'
-    }, 4000)
-    setTimeout(() => {
-        toast.remove()
-    }, 6000)
+				close : true,
+				gravity : "top",
+				position : "right",
 
+				stopOnFocus : true,
+
+				style : {
+					background : `linear-gradient(to right, ${toast.alert[0]}, ${toast.alert[1]})`,
+				},
+
+			}).showToast();
 
 }
-
-let msg = document.getElementById("message");
-createToast(msg.value);
-msg.value = "";
-
 
 

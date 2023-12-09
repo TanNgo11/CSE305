@@ -36,7 +36,9 @@ function loadAllCategories() {
                     <td>${item.name}</td>
                     <td>${status}</td>
                     <td><button onclick ="activeAccountByID(${item.id})" type="button" class="btn btn-secondary">Active</button>
-                          <button onclick ="disableAccountByID(${item.id})" type="button" class="btn btn-secondary">Inactive</button></td>
+                          <button onclick ="disableAccountByID(${item.id})" type="button" class="btn btn-secondary">Inactive</button>
+                          <button style="width:80px" onclick ="editCategory(${item.id})" type="button" class="btn btn-secondary">Edit</button>
+                          </td>
                 </tr>`
             }
             paging(totalPages, currentPage, function () {
@@ -49,15 +51,17 @@ function loadAllCategories() {
     });
 }
 
+function editCategory(id){
+	window.location.href = "/admin/category/edit/"+id;
+}
+
 function disableAccountByID(id) {
     $.ajax({
         url: "/admin/api/category/" + id,
         type: "delete",
         success: function (data) {
-            console.log(data);
+         
             window.onload = loadAllCategories();
-
-
 
         }
 
@@ -68,7 +72,7 @@ function activeAccountByID(id) {
         url: "/admin/api/category/" + id,
         type: "put",
         success: function (data) {
-            console.log(data);
+          
             window.onload = loadAllCategories();
 
 

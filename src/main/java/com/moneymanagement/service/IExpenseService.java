@@ -10,7 +10,9 @@ import com.moneymanagement.dto.ExpenseDTO;
 import com.moneymanagement.entity.AccountEntity;
 
 public interface IExpenseService {
-	List<ExpenseDTO> getAllExpense();
+	List<ExpenseDTO> getAllExpenseByAccount(AccountEntity accountEntity ,Pageable pageable);
+	
+	List<ExpenseDTO> getAllExpenseByAccount(AccountEntity accountEntity );
 
 	ExpenseDTO saveExpenseDTO(ExpenseDTO entity, long cateId);
 
@@ -22,5 +24,11 @@ public interface IExpenseService {
 	
 	List<ExpenseDTO> findAllExpensesByMonthAndYear(int month, int year);
 	
-	int getTotalExpense();
+	int getTotalExpenseByAccount(AccountEntity accountEntity);
+	
+	int countSearchExpenses(String query, AccountEntity accountEntity);
+	
+	List<ExpenseDTO> searchExpenses(String searchTerm,AccountEntity accountEntity);
+	
+	List<ExpenseDTO> searchExpenses(String searchTerm,AccountEntity accountEntity,Pageable pageable);
 }

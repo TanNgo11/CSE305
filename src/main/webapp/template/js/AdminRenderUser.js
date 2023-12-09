@@ -1,12 +1,12 @@
 var homeConfig = {
-    pageSize: 2,
+    pageSize: 10,
     currentPage: 1
 }
 
 
 function loadAllUsers() {
 
-    var str = "";
+    
     $.ajax({
         url: "/admin/api/accounts",
         type: "get",
@@ -18,16 +18,17 @@ function loadAllUsers() {
         success: function (data) {
 
             var totalPages = data.totalPage;
-            var currentPage = data.currentPage;
+            var currentPage = data.page;
             var listResult = data.listResult;
 
 
-//            console.log(data);
-//            console.log(totalPages);
-//            console.log(currentPage);
+
 
             const content = document.querySelector("#contentTable");
-            var i = 1;
+            var i = 1 * currentPage ;
+            var str=""
+       		if(currentPage!==1)
+       		i+=1;
             for (let item of listResult) {
 
 

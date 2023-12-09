@@ -1,0 +1,85 @@
+.box-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-gap: 24px;
+	margin-top: 36px;
+	margin-bottom: 80px;
+}
+
+.box-info li {
+	padding: 24px;
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+}
+
+.box-info li .bx {
+	width: 80px;
+	height: 80px;
+	border-radius: 10px;
+	font-size: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.customThreeBlocks li .text h3, .customThreeBlocks li .text p {
+	color: #FFFFFF;
+}
+
+.pl-5 {
+	padding-left: 3rem !important;
+}
+
+header, .myCustom {
+	background-color: #f8f9fa;
+}
+
+.customThreeBlocks li {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.container .customTable table.table {
+	border-radius: 105px !important;
+}
+
+.customeText {
+	color: rgb(252, 252, 252);
+	/* Beige or light tan text */
+}
+
+.pl-5 {
+	padding-left: 5rem;
+}
+
+.col-4.customForm {
+	background-color: rgba(75, 80, 78, 0.5);
+	color: #f0f0f0;
+	padding: 20px;
+}
+
+.col-4.customForm label {
+	color: #fcfcfc;
+}
+
+.col-4.customForm input, .col-4.customForm select {
+	background-color: #d8e4ef9f;
+	color: black;
+}
+
+.col-4.customForm input::placeholder, .col-4.customForm select::placeholder
+	{
+	color: #b0b6b8;
+}
+
+.col-4.customForm .btn-primary {
+	background-color: #ffd700;
+	color: #4b504e;
+}
+
+body {
+	background: linear-gradient(45deg, #3cdfc1, #7bbb1b, #3e3cdf, #9c27b0);
+	min-height: 100vh;
+}
+

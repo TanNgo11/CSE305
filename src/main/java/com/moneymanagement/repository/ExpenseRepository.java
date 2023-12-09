@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.annotations.Sort;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -46,6 +47,45 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long> {
             @Param("accountEntity") AccountEntity accountEntity,
             @Param("year") int year);
 
+	List<ExpenseEntity> findAllByAccountEntityOrderByCreatedDateDesc(AccountEntity accountEntity ,Pageable pageable);
+	
 	List<ExpenseEntity> findAllByAccountEntityOrderByCreatedDateDesc(AccountEntity accountEntity);
+	
+	long countByAccountEntity(AccountEntity accountEntity);
+	
+	@Query("SELECT e FROM ExpenseEntity e " +
+		       "JOIN e.categoryEntity c " +
+		       "WHERE (c.name LIKE %:searchTerm% " +
+		       "OR e.description LIKE %:searchTerm% " +
+		       "OR CAST(e.amount AS string) LIKE %:searchTerm% " +
+		       "OR DATE_FORMAT(e.createdDate, '%m/%d/%Y %H:%i:%s') LIKE %:searchTerm%) " +
+		       "AND e.accountEntity = :accountEntity")
+		Page<ExpenseEntity> searchExpenses(
+		    @Param("searchTerm") String searchTerm,
+		    @Param("accountEntity") AccountEntity accountEntity,
+		    Pageable pageable
+		);
 
+	
+	@Query("SELECT e FROM ExpenseEntity e " +
+		       "JOIN e.categoryEntity c " +
+		       "WHERE (c.name LIKE %:searchTerm% " +
+		       "OR e.description LIKE %:searchTerm% " +
+		       "OR CAST(e.amount AS string) LIKE %:searchTerm% " +
+		       "OR DATE_FORMAT(e.createdDate, '%m/%d/%Y %H:%i:%s') LIKE %:searchTerm%) " +
+		       "AND e.accountEntity = :accountEntity")
+		List<ExpenseEntity> searchExpenses(@Param("searchTerm") String searchTerm , @Param("accountEntity") AccountEntity accountEntity);
+	
+	
+	@Query("SELECT COUNT(e) FROM ExpenseEntity e " +
+		       "JOIN e.categoryEntity c " +
+		       "WHERE (c.name LIKE %:searchTerm% " +
+		       "OR e.description LIKE %:searchTerm% " +
+		       "OR CAST(e.amount AS string) LIKE %:searchTerm% " +
+		       "OR DATE_FORMAT(e.createdDate, '%m/%d/%Y %H:%i:%s') LIKE %:searchTerm%) " +
+		       "AND e.accountEntity = :accountEntity")
+		long countSearchExpenses(
+		    @Param("searchTerm") String searchTerm,
+		    @Param("accountEntity") AccountEntity accountEntity
+		);
 }

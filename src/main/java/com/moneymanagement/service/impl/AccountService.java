@@ -114,4 +114,18 @@ public class AccountService implements IAccountService {
 		return (int) userRepository.count();
 		
 	}
+
+	@Override
+	public List<AccountDTO> getAllAccounts() {
+		List<AccountEntity> listAccountEntity = userRepository.findAll();
+
+		List<AccountDTO> listAccountDTO = new ArrayList<>();
+
+		for (AccountEntity accountEntity : listAccountEntity) {
+			listAccountDTO.add(accountConverter.toDTO(accountEntity));
+		}
+
+		return listAccountDTO;
+		
+	}
 }

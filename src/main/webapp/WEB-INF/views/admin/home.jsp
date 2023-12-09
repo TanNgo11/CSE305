@@ -14,26 +14,24 @@
 			<ul class="breadcrumb">
 				<li><a href="#">Dashboard</a></li>
 				<li><i class='bx bx-chevron-right'></i></li>
-				<li><a class="active" href="#">Home</a></li>
+				<li><a class="active" href="/admin/home">User</a></li>
 			</ul>
 		</div>
-		<a href="#" class="btn-download"> <i class='bx bxs-cloud-download'></i>
-			<span class="text">Download PDF</span>
-		</a>
+		
 	</div>
 
 	<ul class="box-info">
 		<li><i class='bx bxs-calendar-check'></i> <span class="text">
-				<h3>1020</h3>
-				<p>New Order</p>
+				<h3>15</h3>
+				<p>Category</p>
 		</span></li>
 		<li><i class='bx bxs-group'></i> <span class="text">
 				<h3>2834</h3>
 				<p>Visitors</p>
 		</span></li>
 		<li><i class='bx bxs-dollar-circle'></i> <span class="text">
-				<h3>$2543</h3>
-				<p>Total Sales</p>
+				<h3>15</h3>
+				<p>Total User</p>
 		</span></li>
 	</ul>
 
@@ -44,9 +42,7 @@
 				<h3>User list</h3>
 				<i class='bx bx-search'></i> <i class='bx bx-filter'></i>
 				<!-- add Product -->
-				<a href="#" id="add"> <i class="fa fa-plus-circle fa-2x mr-2"></i>
-					<span>Add new account</span>
-				</a>
+				
 			</div>
 
 
